@@ -4,10 +4,10 @@ import BookController from '../controllers/BookController';
 
 const router = Router();
 
-router.get('/', BookController.getAllBooks);
-router.post('/', BookController.addBook);
-router.get('/:id', BookController.getABook);
-router.put('/:id', BookController.updatedBook);
-router.delete('/:id', BookController.deleteBook);
+router.get('/api/v1/books', BookController.getAllBooks);
+router.post('/api/v1/books', BookController.addBook);
+// router.get('/api/v1/books/:id', BookController.getABook);
+// router.put('/api/v1/books/:id', BookController.updatedBook);
+// router.delete('/api/v1/books/:id', BookController.deleteBook);
 
 export default router;
