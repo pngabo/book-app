@@ -1,1 +1,1 @@
-# book-app [![Build Status](https://travis-ci.com/patrickngabo/book-app.svg?branch=develop)](https://travis-ci.com/patrickngabo/book-app)
+# book-app [![Build Status](https://travis-ci.com/patrickngabo/book-app.svg?branch=develop)](https://travis-ci.com/patrickngabo/book-app) [![Coverage Status](https://coveralls.io/repos/github/patrickngabo/book-app/badge.svg?branch=develop)](https://coveralls.io/github/patrickngabo/book-app?branch=develop)
