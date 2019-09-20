@@ -1,8 +1,7 @@
-
-import { Router } from 'express';
+import express from 'express';
 import BookController from '../controllers/BookController';
 
-const router = Router();
+const router = express.Router();
 
 router.get('/api/v1/books', BookController.getAllBooks);
 router.post('/api/v1/books', BookController.addBook);

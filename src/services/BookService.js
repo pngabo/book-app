@@ -1,9 +1,11 @@
 import database from '../models';
 
+const { Book } = database;
+
 class BookService {
   static async getAllBooks() {
     try {
-      return await database.Book.findAll();
+      return await Book.findAll();
     } catch (error) {
       throw error;
     }
@@ -11,7 +13,7 @@ class BookService {
 
   static async addBook(newBook) {
     try {
-      return await database.Book.create(newBook);
+      return await Book.create(newBook);
     } catch (error) {
       throw error;
     }
@@ -19,12 +21,12 @@ class BookService {
 
   static async updateBook(id, updateBook) {
     try {
-      const bookToUpdate = await database.Book.findOne({
+      const bookToUpdate = await Book.findOne({
         where: { id: Number(id) }
       });
 
       if (bookToUpdate) {
-        await database.Book.update(updateBook, { where: { id: Number(id) } });
+        await Book.update(updateBook, { where: { id: Number(id) } });
         return updateBook;
       }
       return null;
@@ -35,7 +37,7 @@ class BookService {
 
   static async getABook(id) {
     try {
-      const theBook = await database.Book.findOne({
+      const theBook = await Book.findOne({
         where: { id: Number(id) }
       });
 
@@ -47,10 +49,10 @@ class BookService {
 
   static async deleteBook(id) {
     try {
-      const bookToDelete = await database.Book.findOne({ where: { id: Number(id) } });
+      const bookToDelete = await Book.findOne({ where: { id: Number(id) } });
 
       if (bookToDelete) {
-        const deletedBook = await database.Book.destroy({
+        const deletedBook = await Book.destroy({
           where: { id: Number(id) }
         });
         return deletedBook;
