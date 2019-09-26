@@ -46,7 +46,8 @@
     "pg-hstore": "^2.3.3",
     "sequelize": "^5.19.0",
     "sequelize-cli": "^5.5.1",
-    "serve": "11.1.0"
+    "serve": "11.1.0",
+    "cors": "2.8.5"
   },
   "devDependencies": {
     "chai": "^4.2.0",
