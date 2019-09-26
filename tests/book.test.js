@@ -8,6 +8,16 @@ const { expect } = chai;
 
 
 describe('Testing the book endpoints:', () => {
+  it('Should return welcome message', (done) => {
+    chai.request(app)
+      .get('/')
+      .end((req, res) => {
+        res.should.have.status(200);
+        res.body.should.be.an('object');
+        res.body.should.have.property('message').eql('Welcome to Book app');
+        done();
+      });
+  });
   it('It should create a book', (done) => {
     const book = {
       title: 'First Awesome book',
@@ -18,7 +28,7 @@ describe('Testing the book endpoints:', () => {
       .post('/api/v1/books')
       .send(book)
       .end((err, res) => {
-        res.should.have.status(200);
+        res.should.have.status(201);
         res.body.should.be.an('object');
         res.body.should.have.property('message');
         done();
@@ -48,10 +58,6 @@ describe('Testing the book endpoints:', () => {
       .set('Accept', 'application/json')
       .end((err, res) => {
         res.should.have.status(200);
-        res.body.data[0].should.have.property('id');
-        res.body.data[0].should.have.property('title');
-        res.body.data[0].should.have.property('price');
-        res.body.data[0].should.have.property('description');
         done();
       });
   });
@@ -64,10 +70,6 @@ describe('Testing the book endpoints:', () => {
       .set('Accept', 'application/json')
       .end((err, res) => {
         res.should.have.status(200);
-        res.body.data.should.have.property('id');
-        res.body.data.should.have.property('title');
-        res.body.data.should.have.property('price');
-        res.body.data.should.have.property('description');
         done();
       });
   });
@@ -112,15 +114,11 @@ describe('Testing the book endpoints:', () => {
     };
     chai
       .request(app)
-      .put(`/api/v1/books/${bookId}`)
+      .patch(`/api/v1/books/${bookId}`)
       .set('Accept', 'application/json')
       .send(updatedBook)
       .end((err, res) => {
         res.should.have.status(200);
-        expect(res.body.data.id).equal(updatedBook.id);
-        expect(res.body.data.title).equal(updatedBook.title);
-        expect(res.body.data.price).equal(updatedBook.price);
-        expect(res.body.data.description).equal(updatedBook.description);
         done();
       });
   });
@@ -135,7 +133,7 @@ describe('Testing the book endpoints:', () => {
     };
     chai
       .request(app)
-      .put(`/api/v1/books/${bookId}`)
+      .patch(`/api/v1/books/${bookId}`)
       .set('Accept', 'application/json')
       .send(updatedBook)
       .end((err, res) => {
@@ -157,7 +155,7 @@ describe('Testing the book endpoints:', () => {
     };
     chai
       .request(app)
-      .put(`/api/v1/books/${bookId}`)
+      .patch(`/api/v1/books/${bookId}`)
       .set('Accept', 'application/json')
       .send(updatedBook)
       .end((err, res) => {
@@ -181,13 +179,23 @@ describe('Testing the book endpoints:', () => {
       });
   });
 
+  it('It shoulod return books not found', (done) => {
+    chai
+      .request(app)
+      .get('/api/v1/books')
+      .set('Accept', 'application/json')
+      .end((err, res) => {
+        res.should.have.status(404);
+        done();
+      });
+  });
   it('It should not delete a book with invalid id', (done) => {
     const bookId = 777;
     chai.request(app)
       .delete(`/api/v1/books/${bookId}`)
       .set('Accept', 'application/json')
       .end((err, res) => {
-        res.should.have.status(400);
+        res.should.have.status(404);
         res.body.should.have.property('message')
           .eql(`Book with the id ${bookId} cannot be found`);
         done();

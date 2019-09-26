@@ -4,11 +4,11 @@ class BookController {
   static async getAllBooks(req, res) {
     try {
       const allBooks = await BookService.getAllBooks();
-      return allBooks.length > 0
-        ? res.status(200).json('Books retrieved', allBooks)
+      return allBooks.length
+        ? res.status(200).json({ message: 'Books retrieved', allBooks })
         : res.status(404).json({ message: 'No book found' });
     } catch (error) {
-      return res.status(500).send(error.message);
+      return res.status(500).json(error.message);
     }
   }
 
@@ -19,25 +19,26 @@ class BookController {
       }
       const newBook = req.body;
       const createdBook = await BookService.addBook(newBook);
-      return res.status(201).json('Book Added!', createdBook);
+      return res.status(201).json({ message: 'Book Added!', createdBook });
     } catch (error) {
-      return res.status(500).send(error.message);
+      return res.status(500).json(error.message);
     }
   }
 
   static async updatedBook(req, res) {
-    const alteredBook = req.body;
-    const { id } = req.params;
-    if (!Number(id)) {
-      return res.status(400).json({ message: 'Please input a valid numeric value' });
-    }
     try {
+      const alteredBook = req.body;
+      const { id } = req.params;
+      if (!Number(id)) {
+        return res.status(400).json({ message: 'Please input a valid numeric value' });
+      }
+
       const updateBook = await BookService.updateBook(id, alteredBook);
       return updateBook
-        ? res.status(200).json('Book updated', updateBook)
+        ? res.status(200).json({ message: 'Book updated', updateBook })
         : res.status(404).json({ message: `Cannot find book with the id: ${id}` });
     } catch (error) {
-      return res.status(500).send(error.message);
+      return res.status(500).json(error.message);
     }
   }
 
@@ -53,7 +54,7 @@ class BookController {
         ? res.status(200).json({ message: 'Found Book', theBook })
         : res.status(404).json({ message: `Cannot find book with the id ${id}` });
     } catch (error) {
-      return res.status(500).send(error.message);
+      return res.status(500).json(error.message);
     }
   }
 
@@ -67,7 +68,7 @@ class BookController {
       return bookToDelete ? res.status(200).json({ message: 'Book deleted' })
         : res.status(404).json({ message: `Book with the id ${id} cannot be found` });
     } catch (error) {
-      return res.status(500).send(error.message);
+      return res.status(500).json(error.message);
     }
   }
 }

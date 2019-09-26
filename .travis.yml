@@ -9,18 +9,20 @@ install:
   - npm install
 services:
   - postgresql
-
+before_install:
+  - npm install sequelize-cli -g
 env:
   global:
   - NODE_ENV=test
+  - DATABASE_TEST=postgres://postgres:@127.0.0.1:5432/books_test
 
 before_script:
+  - psql -c 'drop database if exists books_test;' -U postgres
   - psql -c 'create database books_test;' -U postgres
-  - psql -c "CREATE USER steven WITH PASSWORD null;" -U postgres
   - npm run build
   - npm install -g sequelize-cli
-  - sequelize db:migrate
+  - npm run migrate
 script:
-  - npm test
+  - npm run test
 after_success:
   - npm run coverage
