@@ -4,9 +4,10 @@
   "description": "book application",
   "main": "app.js",
   "scripts": {
-    "dev": "nodemon --exec babel-node ./src/app.js",
-    "start": "serve -s build",
-    "migrate": "sequelize db:migrate:undo:all  && sequelize db:migrate",
+    "start": "npm run create && NODE_ENV=production babel-node ./src/app.js",
+    "dev": "babel-node ./src/app.js",
+    "create": "NODE_ENV=production sequelize db:migrate",
+    "migrate": "sequelize db:migrate:undo:all && sequelize db:migrate",
     "test": "NODE_ENV=test npm run migrate && NODE_ENV=test nyc --reporter=html --reporter=text mocha --require @babel/register --timeout 3000 ./tests/*.js --exit",
     "build": "rm -rf ./build && babel -d ./build ./src -s",
     "generate-lcov": "nyc report --reporter=text-lcov > lcov.info",
@@ -37,12 +38,14 @@
     "@babel/runtime": "^7.4.5",
     "babel-loader": "^8.0.6",
     "body-parser": "^1.19.0",
+    "concurrently": "^4.1.2",
     "dotenv": "^8.0.0",
     "express": "^4.17.1",
     "path": "^0.12.7",
     "pg": "^7.11.0",
     "pg-hstore": "^2.3.3",
     "sequelize": "^5.19.0",
+    "sequelize-cli": "^5.5.1",
     "serve": "11.1.0"
   },
   "devDependencies": {
