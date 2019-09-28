@@ -83,7 +83,7 @@ describe('Testing the book endpoints:', () => {
       .end((err, res) => {
         expect(res.status).to.equal(404);
         res.body.should.have
-          .property('message')
+          .property('error')
           .eql(`Cannot find book with the id ${bookId}`);
         done();
       });
@@ -98,7 +98,7 @@ describe('Testing the book endpoints:', () => {
       .end((err, res) => {
         res.should.have.status(400);
         res.body.should.have
-          .property('message')
+          .property('error')
           .eql('Please input a valid numeric value');
         done();
       });
@@ -139,7 +139,7 @@ describe('Testing the book endpoints:', () => {
       .end((err, res) => {
         res.should.have.status(404);
         res.body.should.have
-          .property('message')
+          .property('error')
           .eql(`Cannot find book with the id: ${bookId}`);
         done();
       });
@@ -161,7 +161,7 @@ describe('Testing the book endpoints:', () => {
       .end((err, res) => {
         res.should.have.status(400);
         res.body.should.have
-          .property('message')
+          .property('error')
           .eql('Please input a valid numeric value');
         done();
       });
@@ -196,7 +196,7 @@ describe('Testing the book endpoints:', () => {
       .set('Accept', 'application/json')
       .end((err, res) => {
         res.should.have.status(404);
-        res.body.should.have.property('message')
+        res.body.should.have.property('error')
           .eql(`Book with the id ${bookId} cannot be found`);
         done();
       });
@@ -210,7 +210,7 @@ describe('Testing the book endpoints:', () => {
       .set('Accept', 'application/json')
       .end((err, res) => {
         res.should.have.status(400);
-        res.body.should.have.property('message')
+        res.body.should.have.property('error')
           .eql('Please provide a numeric value');
         done();
       });
